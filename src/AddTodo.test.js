@@ -84,4 +84,13 @@ afterEach(() => {
 
  test('test that App component renders different colors for past due events', () => {
   render(<App />);
+  const inputTask = screen.getByRole('textbox', {name: /Add New Item/i});
+  const inputDate = screen.getByPlaceholderText("mm/dd/yyyy");
+  const element = screen.getByRole('button', {name: /Add/i});
+  const dueDate = "05/30/2021";
+  fireEvent.change(inputTask, { target: { value: "Task 1"}});
+  fireEvent.change(inputDate, { target: { value: dueDate}});
+  fireEvent.click(element);
+  const check = screen.getByTestId(/Task 1/i).style.background;
+  expect(check).toBe("red");
  });
